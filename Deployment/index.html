@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        DiabetesCare AI
+    </title>
+
+
+    <style>
+
+        /* =================================================
+           GLOBAL
+        ================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        :root {
+
+            --navy: #0B1F3A;
+
+            --navy-light: #132F52;
+
+            --blue: #2563EB;
+
+            --blue-light: #EFF6FF;
+
+            --background: #F5F8FC;
+
+            --white: #FFFFFF;
+
+            --text: #172033;
+
+            --muted: #64748B;
+
+            --border: #E2E8F0;
+
+            --green: #16A34A;
+
+            --yellow: #D97706;
+
+            --red: #DC2626;
+        }
+
+
+        body {
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                var(--background);
+
+            color:
+                var(--text);
+
+        }
+
+
+        /* =================================================
+           LAYOUT
+        ================================================= */
+
+        .app {
+
+            min-height: 100vh;
+
+            display: flex;
+
+        }
+
+
+        /* =================================================
+           SIDEBAR
+        ================================================= */
+
+        .sidebar {
+
+            width: 250px;
+
+            background:
+                var(--navy);
+
+            color: white;
+
+            padding: 30px 20px;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 45px;
+
+        }
+
+
+        .logo-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.12);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+        }
+
+
+        .logo h2 {
+
+            font-size: 18px;
+
+        }
+
+
+        .logo p {
+
+            font-size: 11px;
+
+            opacity: .6;
+
+            margin-top: 3px;
+
+        }
+
+
+        .nav {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+
+        }
+
+
+        .nav button {
+
+            border: none;
+
+            background: transparent;
+
+            color:
+                rgba(255,255,255,.65);
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            transition: .2s;
+
+        }
+
+
+        .nav button:hover,
+        .nav button.active {
+
+            background:
+                rgba(255,255,255,.12);
+
+            color: white;
+
+        }
+
+
+        .sidebar-bottom {
+
+            margin-top: auto;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.1);
+
+            padding-top: 20px;
+
+            font-size: 12px;
+
+            color:
+                rgba(255,255,255,.6);
+
+        }
+
+
+        .online {
+
+            display: inline-block;
+
+            width: 8px;
+
+            height: 8px;
+
+            background: #22C55E;
+
+            border-radius: 50%;
+
+            margin-right: 6px;
+
+        }
+
+
+        /* =================================================
+           MAIN
+        ================================================= */
+
+        .main {
+
+            flex: 1;
+
+            padding: 45px;
+
+            max-width: 1400px;
+
+        }
+
+
+        .header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .eyebrow {
+
+            color:
+                var(--blue);
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 34px;
+
+            color:
+                var(--navy);
+
+        }
+
+
+        .subtitle {
+
+            color:
+                var(--muted);
+
+            margin-top: 10px;
+
+            max-width: 650px;
+
+            line-height: 1.6;
+
+        }
+
+
+        .model-status {
+
+            background: white;
+
+            border:
+                1px solid
+                var(--border);
+
+            padding: 11px 16px;
+
+            border-radius: 25px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            color:
+                var(--navy);
+
+        }
+
+
+        /* =================================================
+           CARDS
+        ================================================= */
+
+        .card {
+
+            background:
+                white;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(11,31,58,.04);
+
+        }
+
+
+        .card-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .number {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 10px;
+
+            background:
+                var(--blue-light);
+
+            color:
+                var(--blue);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: bold;
+
+            font-size: 12px;
+
+        }
+
+
+        .card-header h2 {
+
+            color:
+                var(--navy);
+
+            font-size: 18px;
+
+        }
+
+
+        .card-header p {
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+
+            margin-top: 4px;
+
+        }
+
+
+        /* =================================================
+           FORM
+        ================================================= */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .field {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .field label {
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #334155;
+
+        }
+
+
+        .field input,
+        .field select {
+
+            height: 46px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 10px;
+
+            padding: 0 13px;
+
+            background: #FAFCFF;
+
+            outline: none;
+
+            color:
+                var(--text);
+
+        }
+
+
+        .field input:focus,
+        .field select:focus {
+
+            border-color:
+                var(--blue);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37,99,235,.1);
+
+        }
+
+
+        /* =================================================
+           BUTTON
+        ================================================= */
+
+        .predict-button {
+
+            width: 100%;
+
+            border: none;
+
+            background:
+                var(--navy);
+
+            color: white;
+
+            padding: 17px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+            margin: 10px 0 25px;
+
+        }
+
+
+        .predict-button:hover {
+
+            background:
+                var(--blue);
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        /* =================================================
+           RESULT
+        ================================================= */
+
+        .result {
+
+            display: none;
+
+            background: white;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .result.show {
+
+            display: block;
+
+        }
+
+
+        .result-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+
+        .result-top h2 {
+
+            color:
+                var(--navy);
+
+        }
+
+
+        .risk {
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+        }
+
+
+        .low {
+
+            background: #DCFCE7;
+
+            color:
+                var(--green);
+
+        }
+
+
+        .moderate {
+
+            background: #FEF3C7;
+
+            color:
+                var(--yellow);
+
+        }
+
+
+        .high {
+
+            background: #FEE2E2;
+
+            color:
+                var(--red);
+
+        }
+
+
+        .result-body {
+
+            display: grid;
+
+            grid-template-columns:
+                220px 1fr;
+
+            gap: 35px;
+
+            align-items: center;
+
+            margin-top: 30px;
+
+        }
+
+
+        .score {
+
+            background:
+                var(--blue-light);
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            text-align: center;
+
+        }
+
+
+        .percentage {
+
+            font-size: 45px;
+
+            font-weight: bold;
+
+            color:
+                var(--navy);
+
+        }
+
+
+        .score p {
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+
+        }
+
+
+        .result-text h3 {
+
+            color:
+                var(--navy);
+
+            font-size: 23px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .result-text p {
+
+            color:
+                var(--muted);
+
+            line-height: 1.6;
+
+        }
+
+
+        .progress {
+
+            height: 10px;
+
+            background:
+                #E2E8F0;
+
+            border-radius: 20px;
+
+            margin-top: 20px;
+
+            overflow: hidden;
+
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            width: 0%;
+
+            background:
+                var(--blue);
+
+            transition:
+                width 1s ease;
+
+        }
+
+
+        .disclaimer {
+
+            margin-top: 25px;
+
+            padding: 13px;
+
+            background:
+                #F8FAFC;
+
+            border-radius: 9px;
+
+            color:
+                var(--muted);
+
+            font-size: 11px;
+
+        }
+
+
+        /* =================================================
+           BEST MODEL BADGE (inside result header)
+        ================================================= */
+
+        .best-model-tag {
+
+            display: inline-block;
+
+            margin-top: 6px;
+
+            font-size: 12px;
+
+            color:
+                var(--muted);
+
+        }
+
+
+        .best-model-tag strong {
+
+            color:
+                var(--blue);
+
+        }
+
+
+        /* =================================================
+           ALL MODELS COMPARISON
+        ================================================= */
+
+        .models-section {
+
+            margin-top: 30px;
+
+            padding-top: 25px;
+
+            border-top:
+                1px solid
+                var(--border);
+
+        }
+
+
+        .models-section-title {
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color:
+                var(--navy);
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .models-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 16px;
+
+        }
+
+
+        .model-card {
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 14px;
+
+            padding: 18px;
+
+            background: #FAFCFF;
+
+            position: relative;
+
+        }
+
+
+        .model-card.best {
+
+            border-color:
+                var(--blue);
+
+            background:
+                var(--blue-light);
+
+        }
+
+
+        .model-card-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            margin-bottom: 12px;
+
+            gap: 10px;
+
+        }
+
+
+        .model-name {
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color:
+                var(--navy);
+
+        }
+
+
+        .best-badge {
+
+            display: inline-block;
+
+            margin-left: 8px;
+
+            font-size: 9px;
+
+            font-weight: bold;
+
+            letter-spacing: .5px;
+
+            color: white;
+
+            background:
+                var(--blue);
+
+            padding: 3px 7px;
+
+            border-radius: 20px;
+
+            vertical-align: middle;
+
+        }
+
+
+        .model-accuracy {
+
+            font-size: 11px;
+
+            color:
+                var(--muted);
+
+            white-space: nowrap;
+
+        }
+
+
+        .model-accuracy strong {
+
+            color:
+                var(--navy);
+
+        }
+
+
+        .model-prediction-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .model-prediction-text {
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color:
+                var(--text);
+
+        }
+
+
+        .model-risk {
+
+            padding: 4px 10px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+        }
+
+
+        .model-probs {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+        }
+
+
+        .model-prob-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 11px;
+
+            color:
+                var(--muted);
+
+        }
+
+
+        .model-prob-label {
+
+            width: 92px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .model-prob-track {
+
+            flex: 1;
+
+            height: 7px;
+
+            background:
+                #E2E8F0;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+        }
+
+
+        .model-prob-fill {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            transition:
+                width .8s ease;
+
+        }
+
+
+        .model-prob-fill.readmit {
+
+            background:
+                var(--red);
+
+        }
+
+
+        .model-prob-fill.not-readmit {
+
+            background:
+                var(--green);
+
+        }
+
+
+        .model-prob-value {
+
+            width: 42px;
+
+            flex-shrink: 0;
+
+            text-align: right;
+
+            font-weight: bold;
+
+            color:
+                var(--text);
+
+        }
+
+
+        @media(max-width: 750px) {
+
+            .models-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        /* =================================================
+           ABOUT
+        ================================================= */
+
+        .about {
+
+            display: none;
+
+        }
+
+
+        .about.show {
+
+            display: block;
+
+        }
+
+
+        .about h2 {
+
+            color:
+                var(--navy);
+
+            font-size: 28px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .about p {
+
+            color:
+                var(--muted);
+
+            line-height: 1.7;
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media(max-width: 1000px) {
+
+            .form-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media(max-width: 750px) {
+
+            .sidebar {
+
+                width: 75px;
+
+                padding: 20px 10px;
+
+            }
+
+
+            .logo h2,
+            .logo p,
+            .nav button span,
+            .sidebar-bottom {
+
+                display: none;
+
+            }
+
+
+            .main {
+
+                padding: 25px 18px;
+
+            }
+
+
+            .header {
+
+                flex-direction: column;
+
+                gap: 20px;
+
+            }
+
+
+            .result-body {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media(max-width: 550px) {
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .header h1 {
+
+                font-size: 27px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================= -->
+
+    <aside class="sidebar">
+
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                +
+            </div>
+
+            <div>
+
+                <h2>
+                    DiabetesCare
+                </h2>
+
+                <p>
+                    AI Prediction
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav">
+
+            <button
+                class="active"
+                onclick="showPrediction()"
+            >
+
+                <span>
+                    ◉
+                </span>
+
+                Prediction
+
+            </button>
+
+
+            <button
+                onclick="showAbout()"
+            >
+
+                <span>
+                    ⓘ
+                </span>
+
+                About Model
+
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <span class="online"></span>
+
+            Model Online
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =================================================
+         MAIN
+    ================================================= -->
+
+    <main class="main">
+
+
+        <div class="header">
+
+            <div>
+
+                <div class="eyebrow">
+                    MACHINE LEARNING
+                </div>
+
+                <h1>
+                    Diabetes Readmission
+                    Prediction
+                </h1>
+
+                <p class="subtitle">
+
+                    Estimate the likelihood of
+                    hospital readmission using
+                    patient information.
+
+                </p>
+
+            </div>
+
+
+            <div class="model-status">
+
+                ● AI Model Active
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PREDICTION PAGE
+        ================================================= -->
+
+        <div id="predictionPage">
+
+
+            <form id="predictionForm">
+
+
+                <!-- PATIENT -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Patient Information
+                            </h2>
+
+                            <p>
+                                Basic patient characteristics
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="field">
+
+                            <label>
+                                Age Group
+                            </label>
+
+                            <select id="age">
+
+                                <option>
+                                    [0-10)
+                                </option>
+
+                                <option>
+                                    [10-20)
+                                </option>
+
+                                <option>
+                                    [20-30)
+                                </option>
+
+                                <option>
+                                    [30-40)
+                                </option>
+
+                                <option>
+                                    [40-50)
+                                </option>
+
+                                <option>
+                                    [50-60)
+                                </option>
+
+                                <option selected>
+                                    [60-70)
+                                </option>
+
+                                <option>
+                                    [70-80)
+                                </option>
+
+                                <option>
+                                    [80-90)
+                                </option>
+
+                                <option>
+                                    [90-100)
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Gender
+                            </label>
+
+                            <select id="gender">
+
+                                <option>
+                                    Female
+                                </option>
+
+                                <option>
+                                    Male
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Race
+                            </label>
+
+                            <select id="race">
+
+                                <option>
+                                    Caucasian
+                                </option>
+
+                                <option>
+                                    AfricanAmerican
+                                </option>
+
+                                <option>
+                                    Asian
+                                </option>
+
+                                <option>
+                                    Hispanic
+                                </option>
+
+                                <option>
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- HOSPITAL -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Hospitalization
+                            </h2>
+
+                            <p>
+                                Hospital stay and previous visits
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="field">
+
+                            <label>
+                                Time in Hospital
+                            </label>
+
+                            <input
+                                id="time_in_hospital"
+                                type="number"
+                                min="1"
+                                max="14"
+                                value="5"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Lab Procedures
+                            </label>
+
+                            <input
+                                id="num_lab_procedures"
+                                type="number"
+                                min="0"
+                                value="40"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Number of Procedures
+                            </label>
+
+                            <input
+                                id="num_procedures"
+                                type="number"
+                                min="0"
+                                value="1"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Number of Medications
+                            </label>
+
+                            <input
+                                id="num_medications"
+                                type="number"
+                                min="0"
+                                value="15"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Number of Diagnoses
+                            </label>
+
+                            <input
+                                id="number_diagnoses"
+                                type="number"
+                                min="1"
+                                value="7"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Previous Inpatient Visits
+                            </label>
+
+                            <input
+                                id="number_inpatient"
+                                type="number"
+                                min="0"
+                                value="2"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Emergency Visits
+                            </label>
+
+                            <input
+                                id="number_emergency"
+                                type="number"
+                                min="0"
+                                value="1"
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Outpatient Visits
+                            </label>
+
+                            <input
+                                id="number_outpatient"
+                                type="number"
+                                min="0"
+                                value="0"
+                            >
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DIABETES -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Diabetes Information
+                            </h2>
+
+                            <p>
+                                Glucose and treatment information
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="field">
+
+                            <label>
+                                A1C Result
+                            </label>
+
+                            <select id="A1Cresult">
+
+                                <option>
+                                    None
+                                </option>
+
+                                <option>
+                                    Norm
+                                </option>
+
+                                <option>
+                                    >7
+                                </option>
+
+                                <option>
+                                    >8
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Max Glucose Serum
+                            </label>
+
+                            <select id="max_glu_serum">
+
+                                <option>
+                                    None
+                                </option>
+
+                                <option>
+                                    Norm
+                                </option>
+
+                                <option>
+                                    >200
+                                </option>
+
+                                <option>
+                                    >300
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Medication Change
+                            </label>
+
+                            <select id="change">
+
+                                <option>
+                                    No
+                                </option>
+
+                                <option>
+                                    Ch
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Diabetes Medication
+                            </label>
+
+                            <select id="diabetesMed">
+
+                                <option>
+                                    Yes
+                                </option>
+
+                                <option>
+                                    No
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Insulin
+                            </label>
+
+                            <select id="insulin">
+
+                                <option>
+                                    No
+                                </option>
+
+                                <option>
+                                    Steady
+                                </option>
+
+                                <option>
+                                    Up
+                                </option>
+
+                                <option>
+                                    Down
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <button
+                    class="predict-button"
+                    type="submit"
+                >
+
+                    Predict Readmission Risk
+                    →
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- =================================================
+                 RESULT
+            ================================================= -->
+
+            <div
+                id="result"
+                class="result"
+            >
+
+                <div class="result-top">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            PREDICTION RESULT
+                        </div>
+
+                        <h2>
+                            Readmission Assessment
+                        </h2>
+
+                        <div
+                            id="bestModelTag"
+                            class="best-model-tag"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="risk"
+                        class="risk"
+                    >
+
+                    </div>
+
+                </div>
+
+
+                <div class="result-body">
+
+
+                    <div class="score">
+
+                        <div
+                            id="percentage"
+                            class="percentage"
+                        >
+                            0%
+                        </div>
+
+                        <p>
+                            Readmission Probability
+                        </p>
+
+                    </div>
+
+
+                    <div class="result-text">
+
+                        <h3
+                            id="prediction"
+                        >
+                            -
+                        </h3>
+
+                        <p
+                            id="description"
+                        >
+                            -
+                        </p>
+
+
+                        <div class="progress">
+
+                            <div
+                                id="progressBar"
+                                class="progress-bar"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="disclaimer">
+
+                    <strong>
+                        Important:
+                    </strong>
+
+                    This result is generated by
+                    a machine learning model and
+                    should support, not replace,
+                    professional medical judgment.
+
+                </div>
+
+
+                <!-- =========================================
+                     ALL MODELS COMPARISON
+                ========================================= -->
+
+                <div class="models-section">
+
+                    <div class="models-section-title">
+                        Prediction Across All Models
+                    </div>
+
+                    <div
+                        id="modelsGrid"
+                        class="models-grid"
+                    >
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             ABOUT PAGE
+        ================================================= -->
+
+        <div
+            id="aboutPage"
+            class="about"
+        >
+
+            <div class="card">
+
+                <div class="eyebrow">
+                    ABOUT THE PROJECT
+                </div>
+
+                <h2>
+                    DiabetesCare AI
+                </h2>
+
+                <p>
+
+                    This application uses a
+                    machine learning model to
+                    predict whether a diabetic
+                    patient is likely to be
+                    readmitted to the hospital.
+
+                </p>
+
+                <br>
+
+                <p>
+
+                    The backend is implemented
+                    using FastAPI, while the
+                    frontend provides a simple,
+                    responsive interface for
+                    entering patient information
+                    and viewing prediction results.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
