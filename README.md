@@ -25,7 +25,7 @@ A predictive model can potentially support:
 
 ---
 
-## 🧠 Machine Learning Problem
+## Machine Learning Problem
 
 The original dataset contains three readmission outcomes:
 
